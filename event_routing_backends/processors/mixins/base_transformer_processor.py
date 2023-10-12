@@ -2,6 +2,7 @@
 Base Processor Mixin for transformer processors.
 """
 from logging import getLogger
+import json
 
 from eventtracking.processors.exceptions import EventEmissionExit, NoTransformerImplemented
 
