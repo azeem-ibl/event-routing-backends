@@ -24,7 +24,7 @@ class BaseTransformerProcessorMixin:
         Transform the given events, and return the transformed events.
 
         Arguments:
-            event (list of dicts):   Events to be transformed.
+            events (list of dicts):   Events to be transformed.
 
         Returns:
             transformed events (list of ANY)

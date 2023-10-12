@@ -132,8 +132,8 @@ class QueuedSender:
         print(f"Writing to {self.destination_container}/{object_name}")
 
         out = BytesIO()
-        for event in self.event_queue:
-            transformed_event = self.router.processors[0](event)
+        transformed_events = self.router.processors[0](self.event_queue)
+        for transformed_event in transformed_events:
             out.write(str.encode(json.dumps(transformed_event)))
             out.write(str.encode("\n"))
         out.seek(0)
