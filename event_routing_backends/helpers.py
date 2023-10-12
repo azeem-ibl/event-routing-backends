@@ -60,8 +60,8 @@ def get_anonymous_user_id(username_or_id, external_type):
     if not user:
         logger.warning('User with username "%s" does not exist. '
                        'Cannot generate anonymous ID', username_or_id)
-
-        raise ValueError(f"User with username {username_or_id} does not exist.")
+        # hash the username_or_id
+        return str(get_uuid5('anonymous', username_or_id))
 
     # Older versions of edx-platform do not have the XAPI or
     # Caliper ExternalIdTypes, so we fall back to LTI here.
