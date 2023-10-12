@@ -36,7 +36,7 @@ def parse_json_event(line):
     * line:  the eventlog text
     """
     try:
-        parsed = get_event_string_from_line(line)
+        parsed = json.loads(get_event_string_from_line(line))
 
         # The representation of an event that event-routing-backends receives
         # from the async sender if significantly different from the one that
