@@ -10,7 +10,22 @@ from json.decoder import JSONDecodeError
 
 log = logging.getLogger(__name__)
 
-PATTERN_JSON = re.compile(r'^.*?(\{.*\})\s*$')
+def get_event_string_from_line(string, raise_error=True):
+    """
+    For edX tutor instance, we have some events that have been emitted prior to the ibl_edx_tutor_logger configuration
+    Hence we need to extract json event string from line by excluding the logger variables
+    e.g 2022-04-26 16:49:40,618 INFO 29 [tracking] [user None] [ip 172.18.0.1] logger.py:42 - {"name": "/register", "context": {"user_id": null, "path": "/register", "course_id": "", "org_id": ""}, "username": "", "session": "", "ip": "11.10.135.72", "agent": "Mozilla/5.0 (Linux; Android 7.0;) AppleWebKit/537.36 (KHTML, like Gecko) Mobile Safari/537.36 (compatible; PetalBot;+https://webmaster.petalsearch.com/site/petalbot)", "host": "198.50.158.98", "referer": "", "accept_language": "en", "event": "{\"GET\": {\"next\": [\"/blog\"]}, \"POST\": {}}", "time": "2022-04-26T16:49:40.618241+00:00", "event_type": "/register", "event_source": "server", "page": null}
+    """
+    try:
+        json.loads(string)
+        return string
+    except ValueError as e: # previous tutor based edX logs
+        try:
+            return re.search("- (.*)", string, re.DOTALL).group(1)
+        except AttributeError:
+            if not raise_error:
+                return string
+            raise ValueError(e)
 
 
 def parse_json_event(line):
@@ -21,8 +36,7 @@ def parse_json_event(line):
     * line:  the eventlog text
     """
     try:
-        json_match = PATTERN_JSON.match(line)
-        parsed = json.loads(json_match.group(1))
+        parsed = get_event_string_from_line(line)
 
         # The representation of an event that event-routing-backends receives
         # from the async sender if significantly different from the one that

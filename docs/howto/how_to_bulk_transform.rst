@@ -103,9 +103,9 @@ Examples
     python manage.py lms transform_tracking_logs \
     --transformer_type xapi \
     --source_provider LOCAL \
-    --source_config '{"key": "/openedx/data/", "container": "logs", "prefix": "tracking.log"}' \
+    --source_config '{"key": "/tmp/", "container": "logs", "prefix": "tracking.log"}' \
     --destination_provider LOCAL \
-    --destination_config '{"key": "/openedx/data/", "container": "transformed_logs", "prefix": "2023-06-01"}'
+    --destination_config '{"key": "/openedx/data/", "container": "transformed_logs", "prefix": "2023-10"}'
 
 ::
 
