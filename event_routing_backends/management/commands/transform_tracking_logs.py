@@ -84,6 +84,7 @@ def transform_tracking_logs(
             chunks = _get_chunks(source, file, last_successful_byte, end_byte)
 
             for chunk in chunks:
+                print(chunk)
                 chunk = chunk.decode('utf-8')
 
                 # Loop through this chunk, if we find a newline it's time to process

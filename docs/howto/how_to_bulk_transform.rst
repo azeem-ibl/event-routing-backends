@@ -101,7 +101,7 @@ Examples
     # /openedx/data/logs/transformed_events/ the file will be named with the current timestamp.
     # Note: The "container" directory must exist!
     python manage.py lms transform_tracking_logs \
-    --transformer_type caliper \
+    --transformer_type xapi \
     --source_provider LOCAL \
     --source_config '{"key": "/openedx/data/", "container": "logs", "prefix": "tracking.log"}' \
     --destination_provider LOCAL \
