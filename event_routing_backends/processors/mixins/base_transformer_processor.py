@@ -56,6 +56,9 @@ class BaseTransformerProcessorMixin:
         Returns:
             ANY:           transformed event
         """
+        if isinstance(event, str):
+            event = json.loads(event)
+
         event_name = event.get('name')
 
         try:
